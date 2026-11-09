@@ -2,12 +2,18 @@ package com.example.capebe.actividades.entities;
 
 
 
+
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "inscripciones")
+@Table(
+    name = "inscripciones",
+    uniqueConstraints = {
+        @UniqueConstraint(name = "uk_pasajero_jornada", columnNames = {"rut", "jornada_id"})
+    }
+)
 @Data
 public class Inscripcion {
     @Id
@@ -28,13 +34,13 @@ public class Inscripcion {
     private String nombreCompleto;
 
     // c) Oficina Banco a la que pertenecen
-    private String oficinaBanco; // <-- ¡NUEVO CAMPO!
+    private String oficinaBanco; 
 
     // d) Calidad de socio (Socio, Beneficiario, Invitado...)
     private String categoria; 
 
     // e) Número de teléfono móvil
-    private String telefono; // <-- ¡NUEVO CAMPO!
+    private String telefono; 
 
     // --- CAMPOS OPERATIVOS DEL VUELO ---
     
