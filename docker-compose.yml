@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: capebe_postgres
+    environment:
+      POSTGRES_USER: postgres      
+      POSTGRES_PASSWORD: admin     
+      POSTGRES_DB: actividades_db
+    ports:
+      - "5432:5432"
+      
+  capebe-backend:
+    build: .
+    container_name: capebe_spring
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/actividades_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - postgres-db
